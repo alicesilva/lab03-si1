@@ -1,0 +1,54 @@
+.title{
+    margin-bottom: 0;
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+.searchSeries{
+    margin-top: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 150px
+
+}
+
+.titleTable{
+    text-align: center;
+    font-size: 2.5em;
+}
+.textTable{
+    font-size: 1.875em;
+}
+
+.form{
+    margin-top: 50px
+}
+
+.titleSeriesProfile{
+    margin-top: 50px;
+    font-style: normal;
+    font-weight: 900;
+    text-align: center;
+}
+
+a:link{
+    text-decoration: none;
+    color:#000000;
+}
+
+a:hover{
+    text-decoration: underline;
+    color: #000000;
+}
+
+.table1{
+    width: 100%;
+}
+
+td{
+    font-size: 20px;
+    text-align: center;
+    width: 300px;
+}
+
+
