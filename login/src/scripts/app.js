@@ -1,10 +1,7 @@
 ﻿'use strict';
 
 // declare modules
-var app = angular.module('BasicHttpAuthExample', [
-    'ngRoute',
-    'ngCookies'
-])
+var app = angular.module('App', ['ngRoute','ngCookies'])
 
 .config(['$routeProvider', function ($routeProvider) {
 
@@ -24,6 +21,16 @@ var app = angular.module('BasicHttpAuthExample', [
             templateUrl: 'modules/register/views/register.html'
         })
 
+        .when('/search', {
+            controller: 'ControllerSearch',
+            templateUrl: 'modules/search/views/search.html'
+        })
+
+        .when('/watchlist', {
+            controller: 'ControllerWatchlist',
+            templateUrl: 'modules/watchlist/views/watchlist.html'
+        })
+
         .otherwise({ redirectTo: '/login' });
 }])
 
@@ -36,7 +43,7 @@ var app = angular.module('BasicHttpAuthExample', [
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in
-            var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+            var restrictedPage = $.inArray($location.path(), ['/login', '/register', '/']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');

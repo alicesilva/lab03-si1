@@ -5,5 +5,5 @@
     "command": "http-server",
     "isShellCommand": true,
     "showOutput": "silent",
-    "args": ["./src", "-p 8283"]
+    "args": ["./src", "-p 8499"]
 }
