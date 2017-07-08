@@ -1,3 +1,69 @@
-﻿<h1>Home</h1>
-<p>You're logged in!!!</p>
+﻿<div class="title">
+    <div class="container text-center">
+        <h1><strong>Series Channel</strong></h1>
+    </div>
+</div>
+<nav class="navbar navbar-inverse">
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href ng-click= "redirectToWatchlist()">Watchlist</a></li>
+    </ul>
+</nav>
+<div class = "searchSeries">
+    <form name="myForm" class="form-horizontal form ">
+        <div class="form-group">
+            <label class="control-label col-sm-2">Series Name:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control input-lg" ng-model="serieName">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button ng-click="search()" class="btn btn-primary btn-lg">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h1 class="titleSeriesProfile">Profile series</h1>
+    </div>
+    <div class="panel-body">
+        <div ng-repeat="serie in seriesProfile" class="container">
+            <a href ng-click="showSeriesInformation(serie.name)">
+                <h3>{{serie.name}}</h3>
+            </a>
+        </div>
+        <div ng-repeat="serie in seriesProfileWatchlist" class="container">
+            <a href ng-click="showSeriesInformation(serie.name)">
+                <h3>{{serie.name}}</h3>
+            </a>
+        </div>
+        <div id="clickerChecker" ng-show="clickerChecker" class="container-fluid">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <button ng-click="removeProfileSeries(series.Title)" class="btn btn-primary btn-md">Remove profile series</button>
+                        <td><img ng-src="{{series.Poster}}" class="img-thumbnail" width="304" height="236" />
+                        <td><strong>Name: </strong> {{series.Title}}</td>
+                        <td><strong>Synopsis: </strong>{{series.Plot}}</td>
+                        <td><strong>Age rating: </strong>{{series.Rated}}</td>
+                        <td><strong>Average imdb: </strong>{{series.imdbRating}}</td>
+                        <td>
+                            <strong>Evaluation Note: </strong>{{showEvaluationNote(series.Title)}}
+                            <input type="number" class="form-control input-md" ng-model="evaluationNote">
+                            <button ng-click="addEvaluationNote(series.Title)" class="btn btn-primary btn-sm">Add Evaluation Note</button>
+                        </td>
+                        <td>
+                            <strong>Last watched chapter: </strong>{{showChapter(series.Title)}}
+                            <input type="number" class="form-control input-sm" ng-model="chapter">
+                            <button ng-click="addChapter(series.Title)" class="btn btn-primary btn-sm">Register Last Watched Chapter</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" ng-click="clickerChecker = !clickerChecker" class="btn btn-primary btn-md">Hide information</button>
+        </div>
+    </div>
+</div>
 <p><a href="#/login">Logout</a></p>

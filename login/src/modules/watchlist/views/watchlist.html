@@ -1,0 +1,17 @@
+<table class="table">
+                <thead>
+                    <tr>
+                        <td class = "titleTable">Watchlist Series</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="serie in seriesWatchlist">            
+                        <td><img ng-src="{{serie.img}}" class="img-thumbnail" width="304" height="236"></td>
+                        <td class = "textTable">{{serie.name}}</td>
+                        <td><button ng-click="addSerieToProfile(serie.name, serie.year, serie.img)" class="btn btn-primary btn-lg">Add serie to profile</button></td>
+                    </tr>
+                </tbody>
+           </table>
+           <div>
+                <button ng-click="backToHomePage()" class="btn btn-primary btn-lg">Back</button>
+            </div>
