@@ -1,0 +1,25 @@
+<table class="table">
+	<thead>
+		<tr>
+			<td class="titleTable">Search Results</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="serie in series.Search">
+			<td><img ng-src="{{serie.Poster}}" class="img-thumbnail"
+				width="304" height="236"></td>
+			<td class="textTable">{{serie.Title}}, {{serie.Year}}</td>
+			<td><button
+					ng-click="addSerieToProfile(serie.Title, serie.Year, serie.Poster)"
+					class="btn btn-primary btn-lg">Add serie to profile</button></td>
+			<td><button
+					ng-click="addSerieToWatchlist(serie.Title, serie.Year, serie.Poster)"
+					class="btn btn-primary btn-lg">Add serie to watchlist</button></td>
+		</tr>
+	</tbody>
+</table>
+<div>
+	<button ng-click="backToHomePage()" class="btn btn-primary btn-lg">Back</button>
+</div>
+
+{{userLoggedIn}}
