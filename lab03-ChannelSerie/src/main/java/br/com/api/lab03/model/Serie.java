@@ -13,20 +13,9 @@ public class Serie {
 	private String name;
 	private String image;
 	private String year;
-	private int nota;
-	private int lastChapter;
-	public int getNota() {
-		return nota;
-	}
-	public void setNota(int nota) {
-		this.nota = nota;
-	}
-	public int getLastChapter() {
-		return lastChapter;
-	}
-	public void setLastChapter(int lastChapter) {
-		this.lastChapter = lastChapter;
-	}
+	private int note;
+	private int lastWatchedChapter;
+
 	public String getName() {
 		return name;
 	}
@@ -51,6 +40,21 @@ public class Serie {
 	public void setYear(String year) {
 		this.year = year;
 	}
+	
+	public int getNote() {
+		return note;
+	}
+	public void setNote(int note) {
+		this.note = note;
+	}
+	
+	public int getLastWatchedChapter() {
+		return lastWatchedChapter;
+	}
+	public void setLastWatchedChapter(int lastWatchedChapter) {
+		this.lastWatchedChapter = lastWatchedChapter;
+	}
+	
 	
 
 }

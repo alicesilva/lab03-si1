@@ -1,12 +1,8 @@
 package br.com.api.lab03.service;
 
-import java.util.Collection;
-
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import br.com.api.lab03.model.Serie;
 import br.com.api.lab03.model.UserSystem;
 import br.com.api.lab03.repository.UserSystemRepository;
@@ -24,56 +20,76 @@ public class UserSystemService {
 	public UserSystem searchUserToPassword(String password) {
 		return usuarioRepository.searchUserToPassword(password);
 	}
-
-	public UserSystem buscarUser(UserSystem usuario) {
-		return usuarioRepository.findOne(usuario.getId());
-	}
 	
-	public UserSystem buscarUserId(Integer id) {
-		return usuarioRepository.findOne(id);
+	public UserSystem searchUserToEmail(String email) {
+		return usuarioRepository.searchUserToEmail(email);
 	}
-	
 
 	public UserSystem registerSerieToProfile(Integer id, Serie serie) {
-		UserSystem usuarioEncontrado = usuarioRepository.findOne(id);
+		UserSystem foundUser = usuarioRepository.findOne(id);
 		
-		Serie s = buscarSerie(usuarioEncontrado.getSeriesProfile(), serie);
-		Serie s1 = buscarSerie(usuarioEncontrado.getSeriesWacthList(), serie);
-		if( s != null || s1 != null){
+		Serie seriesFoundInProfile = searchSerieInCollection(foundUser.getSeriesProfile(), serie);
+		Serie seriesFoundInWatchlist = searchSerieInCollection(foundUser.getSeriesWacthList(), serie);
+		if( seriesFoundInProfile != null || seriesFoundInWatchlist != null){
 			return null;
 		}else{
-			usuarioEncontrado.getSeriesProfile().add(serie);
-			usuarioRepository.save(usuarioEncontrado);
-			return usuarioEncontrado;
+			foundUser.getSeriesProfile().add(serie);
+			usuarioRepository.save(foundUser);
+			return foundUser;
 		}
 		
 		
 	}
 
-	public UserSystem registerSerieToWatchlist(Integer id, Serie serie1) {
-		UserSystem usuarioEncontrado = usuarioRepository.findOne(id);
+	public UserSystem registerSerieToWatchlist(Integer id, Serie serie) {
+		UserSystem foundUser = usuarioRepository.findOne(id);
 		
-		Serie s = buscarSerie(usuarioEncontrado.getSeriesProfile(), serie1);
-		Serie s1 = buscarSerie(usuarioEncontrado.getSeriesWacthList(), serie1);
-		if( s != null || s1 != null){
+		Serie seriesFoundInProfile = searchSerieInCollection(foundUser.getSeriesProfile(), serie);
+		Serie seriesFoundInWatchlist = searchSerieInCollection(foundUser.getSeriesWacthList(), serie);
+		if( seriesFoundInProfile != null || seriesFoundInWatchlist != null){
 			return null;
 		}else{
-			usuarioEncontrado.getSeriesWacthList().add(serie1);
-			usuarioRepository.save(usuarioEncontrado);
-			return usuarioEncontrado;
+			foundUser.getSeriesWacthList().add(serie);
+			usuarioRepository.save(foundUser);
+			return foundUser;
 		}
 	}
 
 	public UserSystem addNoteEvaluationToSerie(Integer id, Serie serie) {
-		UserSystem usuarioEncontrado = usuarioRepository.findOne(id);
-		Serie serie1 = buscarSerie(usuarioEncontrado.getSeriesProfile(), serie);
-		serie1.setNota(serie.getNota());
-		usuarioRepository.save(usuarioEncontrado);
-		
-		return usuarioEncontrado;
+		UserSystem foundUser = usuarioRepository.findOne(id);
+		Serie seriesFoundInProfile = searchSerieInCollection(foundUser.getSeriesProfile(), serie);
+		seriesFoundInProfile.setNote(serie.getNote());
+		usuarioRepository.save(foundUser);
+		return foundUser;
 	}
 
-	private Serie buscarSerie(Set<Serie> seriesProfile, Serie serie) {
+	public UserSystem addLastChapterWatchedTheSerie(Integer id, Serie serie) {
+		UserSystem foundUser = usuarioRepository.findOne(id);
+		Serie seriesFoundInWatchlist = searchSerieInCollection(foundUser.getSeriesProfile(), serie);
+		seriesFoundInWatchlist.setLastWatchedChapter(serie.getLastWatchedChapter());
+		usuarioRepository.save(foundUser);
+		return foundUser;
+	}
+
+	public UserSystem removeSeriesFromProfile(Integer id, Serie serie) {
+		UserSystem foundUser = usuarioRepository.findOne(id);
+		Serie seriesFoundInProfile = searchSerieInCollection(foundUser.getSeriesProfile(), serie);
+		foundUser.getSeriesProfile().remove(seriesFoundInProfile);
+		usuarioRepository.save(foundUser);
+		return foundUser;
+		
+	}
+
+	public UserSystem registerWatchlistSerieOnProfile(Integer id, Serie serie) {
+		UserSystem foundUser = usuarioRepository.findOne(id);
+		Serie seriesFoundInWatchlist = searchSerieInCollection(foundUser.getSeriesWacthList(), serie);
+		foundUser.getSeriesWacthList().remove(seriesFoundInWatchlist);
+		foundUser.getSeriesProfile().add(seriesFoundInWatchlist);
+		usuarioRepository.save(foundUser);
+		return foundUser;
+	}
+	
+	private Serie searchSerieInCollection(Set<Serie> seriesProfile, Serie serie) {
 		for (Serie series : seriesProfile) {
 				if(series.getName().equals(serie.getName())){
 					return series;
@@ -82,42 +98,10 @@ public class UserSystemService {
 		return null;
 	}
 
-	public UserSystem addLastChapterWatchedTheSerie(Integer id, Serie serie) {
-		UserSystem usuarioEncontrado = usuarioRepository.findOne(id);
-		Serie serie1 = buscarSerie(usuarioEncontrado.getSeriesProfile(), serie);
-		serie1.setLastChapter(serie.getLastChapter());
-		usuarioRepository.save(usuarioEncontrado);
-		
-		return usuarioEncontrado;
-		
-	}
-
-	public UserSystem removeSeriesFromProfile(Integer id, Serie serie) {
-		UserSystem usuarioEncontrado = usuarioRepository.findOne(id);
-		Serie serie1 = buscarSerie(usuarioEncontrado.getSeriesProfile(), serie);
-		
-		Serie serie2 = buscarSerie(usuarioEncontrado.getSeriesWacthList(), serie);
-		usuarioEncontrado.getSeriesProfile().remove(serie1);
-		usuarioRepository.save(usuarioEncontrado);
-
-		return usuarioEncontrado;
-		
-	}
-
-	public int teste2(Integer id, Serie serie) {
-		UserSystem usuarioEncontrado = usuarioRepository.findOne(id);
-		Serie serie1 = buscarSerie(usuarioEncontrado.getSeriesProfile(), serie);
-		return serie1.getNota();
-	}
-
-	public UserSystem registerWatchlistSerieOnProfile(Integer id, Serie serie1) {
-		UserSystem usuarioEncontrado = usuarioRepository.findOne(id);
-
-		Serie s1 = buscarSerie(usuarioEncontrado.getSeriesWacthList(), serie1);
-		usuarioEncontrado.getSeriesWacthList().remove(s1);
-		usuarioEncontrado.getSeriesProfile().add(s1);
-		usuarioRepository.save(usuarioEncontrado);
-		return usuarioEncontrado;
+	public Integer getEvaluationNote(Integer id, Serie serie) {
+		UserSystem foundUser = usuarioRepository.findOne(id);
+		Serie seriesFoundInProfile = searchSerieInCollection(foundUser.getSeriesProfile(), serie);
+		return seriesFoundInProfile.getNote();
 	}
 	
 	

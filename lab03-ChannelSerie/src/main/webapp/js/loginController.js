@@ -14,17 +14,18 @@ app
 				function(response) {
 					localStorage.setItem("userToken",
 							response.data.token);
-					searchUserLoggedIn($scope.user.password);
+					searchUserLoggedIn($scope.user.email);
 					$location.path("/home");
 				}, function(response) {
+					alert("Invalid email or password!");
 				})
 	};
 
-	var searchUserLoggedIn = function(password) {
+	var searchUserLoggedIn = function(email) {
 		token = localStorage.getItem("userToken")
 		$http.defaults.headers.common.Authorization = 'Bearer '
 			+ token;
-		$http.get("/admin/searchUser/" + password).then(
+		$http.get("/admin/searchUser/" + email).then(
 				function(response) {
 					$rootScope.userLoggedIn = response.data;
 				}, function(response) {

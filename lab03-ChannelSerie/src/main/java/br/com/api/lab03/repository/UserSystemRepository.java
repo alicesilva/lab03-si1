@@ -14,4 +14,7 @@ public interface UserSystemRepository extends JpaRepository<UserSystem, Integer>
 	@Query(value="Select u from UserSystem u where u.password=:ppassword ")
 	public UserSystem searchUserToPassword(@Param("ppassword") String password);
 
+	@Query(value="Select u from UserSystem u where u.email=:pemail ")
+	public UserSystem searchUserToEmail(@Param("pemail")String email);
+
 }
