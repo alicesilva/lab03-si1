@@ -26,7 +26,7 @@ public class LoginController {
 			throw new ServletException("Email and password required!");
 		}
 		
-		UserSystem authenticatedUser = userService.searchUserToPassword(userSystem.getPassword());
+		UserSystem authenticatedUser = userService.searchUserToEmail(userSystem.getEmail());
 		
 		if (authenticatedUser==null){
 			throw new ServletException("User not found!");

@@ -9,11 +9,10 @@ app.controller("RegisterController", function($scope, $http) {
 	$scope.user.password = "";
 
 	$scope.register = function() {
-		$http.post("/userRegistration", $scope.user)
-		.then(function(response){
-			if(response.data == ""){
+		$http.post("/userRegistration", $scope.user).then(function(response) {
+			if (response.data == "") {
 				alert("There is already a user with this email!");
-			}else{
+			} else {
 				alert("Registered user successfully!")
 			}
 		})

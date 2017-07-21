@@ -98,10 +98,16 @@ public class UserSystemService {
 		return null;
 	}
 
-	public Integer getEvaluationNote(Integer id, Serie serie) {
+	public Serie getEvaluationNote(Integer id, Serie serie) {
 		UserSystem foundUser = usuarioRepository.findOne(id);
 		Serie seriesFoundInProfile = searchSerieInCollection(foundUser.getSeriesProfile(), serie);
-		return seriesFoundInProfile.getNote();
+		return seriesFoundInProfile;
+	}
+
+	public Serie getlastWatchedChapter(Integer id, Serie serie) {
+		UserSystem foundUser = usuarioRepository.findOne(id);
+		Serie seriesFoundInProfile = searchSerieInCollection(foundUser.getSeriesProfile(), serie);
+		return seriesFoundInProfile;
 	}
 	
 	

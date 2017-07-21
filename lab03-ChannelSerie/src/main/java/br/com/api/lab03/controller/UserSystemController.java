@@ -26,9 +26,9 @@ public class UserSystemController {
 	SerieService serieService;
 	
 	
-	@RequestMapping(method=RequestMethod.GET, value = "/searchUser/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserSystem> buscarUsers(@PathVariable("password") String email){
-		UserSystem foundUser = userService.searchUserToEmail(email);
+	@RequestMapping(method=RequestMethod.POST, value = "/searchUser", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserSystem> buscarUsers(@RequestBody UserSystem user){
+		UserSystem foundUser = userService.searchUserToEmail(user.getEmail());
 		return new ResponseEntity<>(foundUser, HttpStatus.OK);
 	}
 	
@@ -77,6 +77,20 @@ public class UserSystemController {
 		
 		UserSystem userSystem = userService.registerWatchlistSerieOnProfile(id, registeredSerie);
 		return new ResponseEntity<>(userSystem, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value = "/getEvaluationNote/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Serie> getEvaluationNote(@PathVariable("id") Integer id, @RequestBody Serie serie){
+		
+		Serie serieFound = userService.getEvaluationNote(id, serie);
+		return new ResponseEntity<>(serieFound, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value = "/getlastWatchedChapter/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Serie> getlastWatchedChapter(@PathVariable("id") Integer id, @RequestBody Serie serie){
+		
+		Serie serieFound = userService.getlastWatchedChapter(id, serie);
+		return new ResponseEntity<>(serieFound, HttpStatus.CREATED);
 	}
 	
 	
