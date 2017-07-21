@@ -38,7 +38,7 @@ app
 				seriesToAddEvaluationNote.year = serie.Year;
 				seriesToAddEvaluationNote.image = serie.Poster;
 				
-				seriesToAddEvaluationNote.nota = $scope.evaluationNote;
+				seriesToAddEvaluationNote.note = $scope.evaluationNote;
 
 				token = localStorage.getItem("userToken")
 				$http.defaults.headers.common.Authorization = 'Bearer '
@@ -62,7 +62,7 @@ app
 				seriesToAddChapter.name = serie.Title;
 				seriesToAddChapter.year = serie.Year;
 				seriesToAddChapter.image = serie.Poster;
-				seriesToAddChapter.lastChapter = $scope.chapter;
+				seriesToAddChapter.lastWatchedChapter = $scope.chapter;
 
 				token = localStorage.getItem("userToken")
 				$http.defaults.headers.common.Authorization = 'Bearer '
@@ -77,7 +77,6 @@ app
 						}, function(response) {
 
 						})
-						$scope.serie = new Object();
 						$scope.chapter = 0;
 			};
 			 
@@ -108,7 +107,7 @@ app
 				}
 
 			};
-
+			
 			$scope.redirectToWatchlist = function() {
 				$location.path('/watchlist');
 			};

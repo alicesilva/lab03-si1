@@ -18,13 +18,18 @@ import br.com.api.lab03.service.UserSystemService;
 public class RegisterController {
 	
 	@Autowired
-	UserSystemService usuarioService;
+	UserSystemService userService;
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/userRegistration", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserSystem> cadastrar(@RequestBody UserSystem usuario){
-		UserSystem usuarioCadastrado = usuarioService.userRegistration(usuario);
+	public ResponseEntity<UserSystem> cadastrar(@RequestBody UserSystem userSystem){
+		UserSystem getUserToEmail = userService.searchUserToEmail(userSystem.getEmail());
 		
-		return new ResponseEntity<>(usuarioCadastrado, HttpStatus.CREATED);
+		if(getUserToEmail != null){
+			return null;
+		}else{
+			UserSystem registeredUser = userService.userRegistration(userSystem);
+			return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
+		}
 	}
 
 }

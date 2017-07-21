@@ -17,27 +17,27 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class LoginController {
 
 	@Autowired
-	private UserSystemService usuarioService;
+	private UserSystemService userService;
 	
 	@RequestMapping(value="/authenticate", consumes=MediaType.APPLICATION_JSON_VALUE, method= RequestMethod.POST)
-	public LoginResponse autenticar(@RequestBody  UserSystem usuario) throws ServletException{
+	public LoginResponse autenticar(@RequestBody  UserSystem userSystem) throws ServletException{
 		
-		if (usuario.getEmail() ==null || usuario.getPassword()==null){
+		if (userSystem.getEmail() ==null || userSystem.getPassword()==null){
 			throw new ServletException("Email and password required!");
 		}
 		
-		UserSystem usuAutenticado = usuarioService.searchUserToPassword(usuario.getPassword());
+		UserSystem authenticatedUser = userService.searchUserToPassword(userSystem.getPassword());
 		
-		if (usuAutenticado==null){
+		if (authenticatedUser==null){
 			throw new ServletException("User not found!");
 		}
 		
-		if (!usuAutenticado.getPassword().equals(usuario.getPassword())){
+		if (!authenticatedUser.getPassword().equals(userSystem.getPassword())){
 			throw new ServletException("Invalid email or password.");
 		}
 		
 		String token=  Jwts.builder()
-				.setSubject(usuAutenticado.getName())
+				.setSubject(authenticatedUser.getName())
 				.signWith(SignatureAlgorithm.HS512, "banana")
 				.compact();
 		

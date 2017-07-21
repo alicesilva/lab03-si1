@@ -13,21 +13,22 @@ import br.com.api.lab03.model.Serie;
 import br.com.api.lab03.model.UserSystem;
 import br.com.api.lab03.service.SerieService;
 import br.com.api.lab03.service.UserSystemService;
+import io.undertow.attribute.RequestMethodAttribute;
 
 @RestController
 @RequestMapping("/admin")
 public class UserSystemController {
 	
 	@Autowired
-	UserSystemService usuarioService;
+	UserSystemService userService;
 	
 	@Autowired
 	SerieService serieService;
 	
 	
 	@RequestMapping(method=RequestMethod.GET, value = "/searchUser/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserSystem> buscarUsers(@PathVariable("password") String password){
-		UserSystem foundUser = usuarioService.searchUserToPassword(password);
+	public ResponseEntity<UserSystem> buscarUsers(@PathVariable("password") String email){
+		UserSystem foundUser = userService.searchUserToEmail(email);
 		return new ResponseEntity<>(foundUser, HttpStatus.OK);
 	}
 	
@@ -35,38 +36,38 @@ public class UserSystemController {
 	public ResponseEntity<UserSystem> registerSerieToProfile(@PathVariable("id") Integer id, @RequestBody Serie serie){
 		Serie registeredSerie = serieService.registerSerie(serie);
 		
-		UserSystem foundUser = usuarioService.registerSerieToProfile(id, registeredSerie);
-		return new ResponseEntity<>(foundUser, HttpStatus.CREATED);
+		UserSystem userSystem = userService.registerSerieToProfile(id, registeredSerie);
+		return new ResponseEntity<>(userSystem, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/registerSerieToWatchlist/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserSystem> registerSerieToWatchlist(@PathVariable("id") Integer id, @RequestBody Serie serie){
 		Serie registeredSerie = serieService.registerSerie(serie);
 		
-		UserSystem user = usuarioService.registerSerieToWatchlist(id, registeredSerie);
-		return new ResponseEntity<>(user, HttpStatus.CREATED);
+		UserSystem userSystem = userService.registerSerieToWatchlist(id, registeredSerie);
+		return new ResponseEntity<>(userSystem, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/addNoteEvaluationToSerie/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserSystem> addNoteEvaluationToSerie(@PathVariable("id") Integer id, @RequestBody Serie serie){
-		UserSystem user = usuarioService.addNoteEvaluationToSerie(id, serie);
+		UserSystem userSystem = userService.addNoteEvaluationToSerie(id, serie);
 		
-		return new ResponseEntity<>(user, HttpStatus.OK);
+		return new ResponseEntity<>(userSystem, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/addLastChapterWatchedTheSerie/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserSystem> addLastChapterWatchedTheSerie(@PathVariable("id") Integer id, @RequestBody Serie serie){
-		UserSystem user = usuarioService.addLastChapterWatchedTheSerie(id, serie);
+		UserSystem userSystem = userService.addLastChapterWatchedTheSerie(id, serie);
 		
-		return new ResponseEntity<>(user, HttpStatus.OK);
+		return new ResponseEntity<>(userSystem, HttpStatus.OK);
 	}
 	
 
 	@RequestMapping(method=RequestMethod.POST, value = "/removeSeriesFromProfile/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserSystem> removeSeriesFromProfile(@PathVariable("id") Integer id, @RequestBody Serie serie){
-		UserSystem user = usuarioService.removeSeriesFromProfile(id, serie);
+		UserSystem userSystem = userService.removeSeriesFromProfile(id, serie);
 		
-		return new ResponseEntity<>(user, HttpStatus.OK);
+		return new ResponseEntity<>(userSystem, HttpStatus.OK);
 	}
 	
 	
@@ -74,13 +75,9 @@ public class UserSystemController {
 	public ResponseEntity<UserSystem> registerWatchlistSerieOnProfile(@PathVariable("id") Integer id, @RequestBody Serie serie){
 		Serie registeredSerie = serieService.registerSerie(serie);
 		
-		UserSystem usuario = usuarioService.registerWatchlistSerieOnProfile(id, registeredSerie);
-		return new ResponseEntity<>(usuario, HttpStatus.CREATED);
+		UserSystem userSystem = userService.registerWatchlistSerieOnProfile(id, registeredSerie);
+		return new ResponseEntity<>(userSystem, HttpStatus.CREATED);
 	}
-	
-	
-	
-	
 	
 	
 	
